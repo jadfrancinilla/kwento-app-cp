@@ -4,8 +4,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { SuccessComponent } from './success/success.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/change-password', pathMatch: 'full' },
-  { path: 'change-password', component: ChangePasswordComponent },
+  // { path: '', redirectTo: '/change-password', pathMatch: 'full' },
+  { path: '', component: ChangePasswordComponent },
   { path: 'success', component: SuccessComponent }
 ];
 

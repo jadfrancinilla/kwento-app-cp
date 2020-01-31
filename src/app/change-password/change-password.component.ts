@@ -22,23 +22,19 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
     this.token = this.route.snapshot.queryParamMap.get('token');
     this.email = this.route.snapshot.queryParamMap.get('email');
-
-    console.log(this.email);
-    console.log(this.token);
   }
 
   displayValidationErrors(err){
 
   }
 
-  displayErrors(err){
+  displayError(err){
     this.showError = true;
-    this.error = err.error.Message;
+    this.error = "Could not change your password. Please try again later.";
   }
 
   onSubmit(f: NgForm) {
     if(this.isProcessing) return;
-
     this.isProcessing = true;
 
     let formValues = f.value;
@@ -50,7 +46,6 @@ export class ChangePasswordComponent implements OnInit {
     forgotPasswordCredentials.email_address = this.email;
 
     if(forgotPasswordCredentials.password === forgotPasswordCredentials.confirm_password){
-      console.log('yes');
       this.accountService.changePassword(forgotPasswordCredentials)
       .pipe( finalize( () => {
         this.isProcessing = false;
@@ -58,9 +53,12 @@ export class ChangePasswordComponent implements OnInit {
       .subscribe((res: object) => {
         this.router.navigate(['/success']);
       }, (error: any) => {
-        console.log(error);
-        this.displayErrors(error);        
+        this.displayError(error);        
       });
+    }
+    else{
+      this.isProcessing = false;
+      return;
     }
   }
 }
